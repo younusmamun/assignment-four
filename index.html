@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curise Booking</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--Header and Menu Section-->
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a class="active" href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--Booking Section-->
+    <main class="main-content container">
+
+        <div class="booking-content">
+            <h1>Cruise Queen</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book./p>
+        </div>
+
+
+        <div class="booking-form">
+            <h3>Book Ocean Time</h3>
+            <div class="input-group">
+                <label for="">Flying From</label>
+                <input class="inp-style" type="text" name="" placeholder="Dhake, Bangladesh">
+            </div>
+            <div class="input-group">
+                <label for="">Flying To</label>
+                <input class="inp-style" type="text" name="" placeholder="New York, United States">
+            </div>
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">Departure</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+                <div class="input-group">
+                    <label for="">Return</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+            </div>
+            <div class="input-group f-class">
+                <div>
+                    <label for="">First Class ($150)</label>
+                    <input id="first-sit-quantity" class="inp-style inp-width"   name="" value="0">
+                </div>
+                <div class="plus-minus-btn-first">
+                    <button onclick="handleSitClassChange('first', true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                    <button onclick="handleSitClassChange('first', false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                    
+                </div>
+            </div>
+            
+            <div class="input-group f-class">
+                <div>
+                    <label for="">Economy ($100)</label>
+                    <input  id="economy-sit-quantity" class="inp-style inp-width"  name=""value="0">
+                    <button></button>
+                </div>
+                <div class="plus-minus-btn-economy">
+                    <button onclick="handleSitClassChange('economy', true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                    <button onclick="handleSitClassChange('economy', false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                    
+                </div>
+            </div>
+            <div class="calculations">
+                <div class="amount">
+                    <div class="left">
+                        <p >Subtotal</p>
+                    </div>
+                    <div class="right">
+                        <p  id="sub-total">$00</p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <div class="left">
+                        <p>Charge 10% VAT</p>
+                    </div>
+                    <div class="right">
+                        <p id="tax-amount">$00</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="amount">
+                    <div class="left">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="right">
+                        <p id="grand-total">$00</p>
+                    </div>
+                </div>
+            </div>
+            <button id="confirm-booking" class="btn-style">Book Now</button>
+        </div>
+    </main>
+
+    <!--Thank You-->
+
+    <script>
+        function handleSitClassChange(sitClass, isIncrease) {
+
+            const sitCount = getInputValue(sitClass);
+            let sitNewCount = sitCount;
+            if (isIncrease == true) {
+                sitNewCount = sitCount + 1;
+            }
+            if (isIncrease == false && sitCount > 0) {
+                sitNewCount = sitCount - 1;
+            }
+            document.getElementById(sitClass + '-sit-quantity').value = sitNewCount;
+            let sitTotal = 0;
+            if (sitClass == 'first') {
+                sitTotal = sitNewCount * 150;
+            }
+            if (sitClass == 'economy') {
+                sitTotal = sitNewCount * 100;
+            }
+
+            calculateTotalPrice();
+        }
+        function calculateTotalPrice() {
+            const firstSitCount = getInputValue('first');
+            const economySitCount = getInputValue('economy');
+
+            const subTotalPrice = firstSitCount * 150 + economySitCount * 100;
+            document.getElementById('sub-total').innerText = '$' + subTotalPrice;
+
+            const tax = Math.round(subTotalPrice * 0.1);
+            document.getElementById('tax-amount').innerText = '$' + tax;
+
+            const grandTotal = subTotalPrice + tax;
+            document.getElementById('grand-total').innerText = '$' + grandTotal;
+        }
+
+        function getInputValue(sitClass) {
+            const sitInput = document.getElementById(sitClass + '-sit-quantity');
+            const sitCount = parseInt(sitInput.value);
+            return sitCount;
+        }
+
+        document.getElementById("confirm-booking").addEventListener('click',function(){
+            alert("Your booking is confirmed.");
+        })
+        
+
+    </script>
+</body>
+
+</html>
